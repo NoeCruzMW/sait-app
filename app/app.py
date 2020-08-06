@@ -30,8 +30,19 @@ def contact():
     try:
         msg = Message("New request",
                   sender="monsivaisuriel28@gmail.com",
-                  recipients=["uriel.monsivais@sait.red"])        
-        msg.body = "Nuevo correo: "+request_c['mail']
+                  recipients=["uriel.monsivais@sait.red"])
+        mailBody = """ 
+        Hola, nuevo correo de {0}.
+
+        Datos:
+
+            Nombre: {1}
+            Telefono: {2}
+            Numéro de empleados: {3}
+            Servicios de interes: {4} 
+        
+        """.format(request_c['mail'],request_c['name'],request_c['phone'],request_c['employees'],request_c['services'])
+        msg.body = mailBody
         mail.send(msg)
     except ValueError:
         print("Email error")
