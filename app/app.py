@@ -3,10 +3,10 @@ from flask_mail import Mail
 from flask_mail import Message
 
 app = Flask(__name__)
-app.config['MAIL_SERVER']='http://mail.mailkitchen.com/'
+app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'uriel_monsivais@hotmial.com'
-app.config['MAIL_PASSWORD'] = 'monsivaismireles'
+app.config['MAIL_USERNAME'] = 'monsivaisuriel28@gmail.com'
+app.config['MAIL_PASSWORD'] = 'hpqgwjliswijqrwb'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
@@ -29,8 +29,8 @@ def contact():
     request_c = request.form
     try:
         msg = Message("New request",
-                  sender="contacto.sasit.red",
-                  recipients=[request_c['mail']])        
+                  sender="monsivaisuriel28@gmail.com",
+                  recipients=["uriel.monsivais@sait.red"])        
         msg.body = "Nuevo correo: "+request_c['mail']
         mail.send(msg)
     except ValueError:
