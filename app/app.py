@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request
 from flask_mail import Mail
 from flask_mail import Message
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
+
 
 app = Flask(__name__)
 app.config['MAIL_SERVER']='smtp.gmail.com'
@@ -11,6 +15,9 @@ app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost:3306/db_sait'
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 @app.route('/')
 def index():
@@ -48,3 +55,17 @@ def contact():
         print("Email error")
         print(ValueError)
     return render_template('index.html')
+
+class Company(db.Model):
+    __tablename__ = 'companies'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    admin = db.Column(db.String(100), nullable=False)
+    users = db.Column(db.String(256), nullable=False)
+    creation = db.Column(db.String(256), nullable=False)
+    image = db.Column(db.String(256), nullable=False)
+
+    def save(self):
+        if not self.id:
+            db.session.add(self)
+        db.session.commit();
